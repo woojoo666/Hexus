@@ -6,12 +6,96 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 	<title>Hexus</title>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<<<<<<< HEAD
 	<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 	<input type="file" id="fileInput" accept="image/*;capture=camera">
 	<script src="microsoft.js"></script>
+=======
+	<script src="components/fulltilt/dist/fulltilt.min.js"></script>
+	<script src="components/Snap.svg/dist/snap.svg-min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular-animate.js"></script>
+	<style>
+	body {
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		background-color: #222;
+		color: #eee;
+	}
+
+	* {
+		box-sizing: border-box;
+	}
+
+	#selector {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 2;
+		color: #222;
+	}
+
+	.slide-animate-container {
+		width: 100%;
+		max-width: 400px;
+		height: 100%;
+		position: relative;
+		margin: auto;
+	}
+
+	/* Angular Template Animations */
+	.slide-animate.ng-enter, .slide-animate.ng-leave {
+		transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+
+		position:absolute;
+		top:0;
+		left:0;
+		right:0;
+		bottom:0;
+		display:block;
+		padding:10px;
+	}
+
+	.slide-animate.ng-enter {
+		top:-50px;
+	}
+	.slide-animate.ng-enter.ng-enter-active {
+		top:0;
+	}
+
+	.slide-animate.ng-leave {
+		top:0;
+	}
+	.slide-animate.ng-leave.ng-leave-active {
+		top:50px;
+	}
+	</style>
+</head>
+
+<body ng-app="includeExample" ng-controller="ExampleController">
+	<select id="selector" ng-model="template" ng-options="t.name for t in templates">
+		<option value="">(blank)</option>
+	</select>
+	<div class="slide-animate-container">
+		<div class="slide-animate" ng-include="template.url"></div>
+	</div>
+	<script>
+
+	angular.module('includeExample', ['ngAnimate'])
+		.controller('ExampleController', ['$scope', function($scope) {
+			$scope.templates = [
+				{ name: 'searching.html', url: 'searching.html'},
+				{ name: 'template1.html', url: 'template1.html'},
+				{ name: 'template2.html', url: 'template2.html'}];
+			$scope.template = $scope.templates[0];
+		}]);
+	</script>
+>>>>>>> 1e75253cfdaad9e7d3c0848be7525ac2f2c622de
 </body>
 
 <!-- <form enctype="multipart/form-data" method="post">

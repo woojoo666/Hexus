@@ -1,0 +1,22 @@
+<style>
+#logo {
+	width: 100%;
+	height: 500px;
+}
+</style>
+<svg id="logo"></svg>
+<script>
+
+$('#logo').height($('#logo').width());
+var s = Snap("#logo");
+var g = s.group();
+
+var hoverover = function() { g.animate({ transform: 's2r45,150,150' }, 1000, mina.bounce ) };
+var hoverout = function() { g.animate({ transform: 's1r0,150,150' }, 1000, mina.bounce ) };
+
+Snap.load('../logo.svg', function ( loadedFragment ) {
+	g.append( loadedFragment );
+	g.hover( hoverover, hoverout );
+	g.text(300,100, 'hover over me');
+});
+</script>
