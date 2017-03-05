@@ -20,6 +20,7 @@
     "tests"
   ],
   "dependencies": {
-    "fulltilt": "^0.5.3"
+    "fulltilt": "^0.5.3",
+    "Snap.svg": "snap.svg#^0.5.1"
   }
 }
