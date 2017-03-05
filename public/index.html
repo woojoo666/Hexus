@@ -74,10 +74,26 @@
 		</select>
 		<input type="file" id="fileInput" accept="image/*;capture=camera">
 	</div>
+	<div id="reader"></div>
 	<div class="slide-animate-container">
 		<div class="slide-animate" ng-include="template.url"></div>
 	</div>
+	<script src="scan.js"></script>
 	<script>
+
+	document.body.onload = function() {
+		$('#reader').base64_scanner(
+			function(imgBase64) {
+				console.log(imgBase64.slice(0,30));
+			},
+			function(err) {
+				console.log(err);
+			},
+			function () {
+				alert('Native web camera streaming (getUserMedia) not supported in this browser.');
+			}
+		);
+	};
 
 	var socket = io.connect('http://' + document.domain + ':' + location.port + '/test.js');
 	socket.on('hello', (msg) => {
