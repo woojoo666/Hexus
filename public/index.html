@@ -81,6 +81,8 @@
 	<script src="scan.js"></script>
 	<script>
 
+	var listeners = [];
+
 	document.body.onload = function() {
 		$('#reader').base64_scanner(
 			function(imgBase64) {
@@ -110,10 +112,14 @@
 		socket.disconnect();
 	};
 
+	var angularScope;
+
 	angular.module('includeExample', ['ngAnimate'])
 		.controller('ExampleController', ['$scope', function($scope) {
+			angularScope = $scope;
 			$scope.templates = [
-				{ name: 'searching.html', url: 'searching.html'},
+				{ name: 'searching', url: 'searching.html'},
+				{ name: 'fulltilt debug', url: 'fulltilt-debug.html'},
 				{ name: 'template1.html', url: 'template1.html'},
 				{ name: 'template2.html', url: 'template2.html'}];
 			$scope.template = $scope.templates[0];
