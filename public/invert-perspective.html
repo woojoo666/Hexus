@@ -29,7 +29,7 @@ Comparison between the blanket taken at a certain roll/pitch/yaw, and then simul
 <canvas id="gl-canvas" width="300" height="400">
 Oops ... your browser doesn't support the HTML5 canvas element
 </canvas>
-<img src="../alpha_0.525 beta_16.124 gamma_-13.307.jpg"/>
+<img src="../straw-hats.jpg"/>
 <div id="generated">
 </div>
 <script>
@@ -52,13 +52,14 @@ window.onload = function init()
 	var beta = 16.12427933099772;
 	var gamma = -13.307355484480873;
 
-	var cameraOffset = new SimpleCartesia().setParent(root).move(vec3(-0.4,-0.6,1.8));
+	var cameraOffset = new SimpleCartesia().setParent(root).move(vec3(0.7,0.7,3));
 	//start with camera moved back 20 and up 10
 	var cameraABG = new CustomCartesia().setParent(cameraOffset).setTransform(
-		new Mat4()
-			.rotate(gamma, vec3(0,1,0)) // gamma = yaw
-			.rotate(beta, vec3(1,0,0)) // beta == pitch
-			.rotate(alpha, vec3(0,0,1))); // alpha == roll
+	new Mat4()
+		.rotate(-alpha, vec3(0,0,1)) // alpha == roll
+		.rotate(-beta, vec3(1,0,0)) // beta == pitch
+		.rotate(-gamma, vec3(0,1,0))); // gamma = yaw
+	//var cameraABG = new SimpleCartesia().setParent(cameraOffset).move(vec3(-0.7,-0.7,0));
 	// note: although the order of transformations is alpha,beta,gamma, transformations on the right are applied first, so we have to reverse the order to gamma,beta,alpha
 	var mCamera = new Camera().setParent(cameraABG);
 
@@ -66,10 +67,10 @@ window.onload = function init()
 	image1.onload = function() { 
 		var texture = glwrapper.createTexture( image1 , gl.NEAREST, gl.NEAREST, gl.CLAMP_TO_EDGE, gl.CLAMP_TO_EDGE );
 		console.log(image1.naturalHeight*1.0/image1.naturalWidth);
-		floorRect = new CustomCartesia().setParent(root).setTransform(new Mat4().scale(vec3(-1, image1.naturalHeight*1.0/image1.naturalWidth),1));
+		floorRect = new CustomCartesia().setParent(root).setTransform(new Mat4().scale(vec3(1, image1.naturalHeight*1.0/image1.naturalWidth),1));
 		mfloor = new TextureSquare(texture).setParent(floorRect);
 	};
-	image1.src = "../straw-hats.jpg";
+	image1.src = "../alpha_0.525 beta_16.124 gamma_-13.307.jpg";
 
 	glwrapper.useScene(root);
 	glwrapper.useCamera(mCamera);
