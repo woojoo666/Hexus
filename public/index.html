@@ -98,11 +98,11 @@
 		);
 	};
 
-	$.post('http://23.236.49.226:5000/image', {msg: 'hi'}, function (res) {
+	$.post('https://23.236.49.226:443/image', {msg: 'hi'}, function (res) {
 		console.log(res);
 	})
 
-	var socket = io.connect('http://23.236.49.226:5000/test');
+	var socket = io.connect('https://23.236.49.226:443/test');
 	socket.on('my response', (msg) => {
 		console.log(msg);
 		socket.emit('my event', {data: 'echo me'});
