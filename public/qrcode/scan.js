@@ -116,12 +116,13 @@
 })( jQuery );
 
 document.body.onload = function() {
-    $('#reader').html5_qrcode(
-	function(data) {
-	    window.location.href = '/u/' + data;
-	},
-	function(err) {
-	    console.log(err);
-	}
-    );
+  $('#reader').html5_qrcode(
+    function(data) {
+      console.log("decoded qr code! Data: " + data);
+      // window.location.href = '/u/' + data;
+    },
+    function(err) {
+      console.log(err);
+    }
+  );
 };
