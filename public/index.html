@@ -7,18 +7,77 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 	<script src="components/fulltilt/dist/fulltilt.min.js"></script>
 	<script src="components/Snap.svg/dist/snap.svg-min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular-animate.js"></script>
 	<style>
 	svg {
 		width: 300px;
 		height: 300px;
 	}
+
+	.slide-animate-container {
+		position:relative;
+		background:white;
+		border:1px solid black;
+		height:40px;
+		overflow:hidden;
+	}
+
+	.slide-animate {
+		padding:10px;
+	}
+
+	/* Angular Template Animations */
+	.slide-animate.ng-enter, .slide-animate.ng-leave {
+		transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+
+		position:absolute;
+		top:0;
+		left:0;
+		right:0;
+		bottom:0;
+		display:block;
+		padding:10px;
+	}
+
+	.slide-animate.ng-enter {
+		top:-50px;
+	}
+	.slide-animate.ng-enter.ng-enter-active {
+		top:0;
+	}
+
+	.slide-animate.ng-leave {
+		top:0;
+	}
+	.slide-animate.ng-leave.ng-leave-active {
+		top:50px;
+	}
 	</style>
 </head>
 
-<body>
+<body ng-app="includeExample">
 	<svg id="logo"></svg>
+	<div ng-controller="ExampleController">
+	  <select ng-model="template" ng-options="t.name for t in templates">
+		<option value="">(blank)</option>
+		</select>
+		url of the template: <code>{{template.url}}</code>
+		<div class="slide-animate-container">
+			<div class="slide-animate" ng-include="template.url"></div>
+		</div>
+	</div>
 	<script>
 
+	angular.module('includeExample', ['ngAnimate'])
+		.controller('ExampleController', ['$scope', function($scope) {
+			$scope.templates = [
+				{ name: 'template1.html', url: 'template1.html'},
+				{ name: 'template2.html', url: 'template2.html'}];
+			$scope.template = $scope.templates[0];
+			$scope.test = "hello world";
+		}]);
+/*
 	var s = Snap("#logo");
 	var g = s.group();
 
@@ -30,7 +89,7 @@
 		g.hover( hoverover, hoverout );
 		g.text(300,100, 'hover over me');
 	});
-
+*/
 	var SUBSCRIPTION_KEY = '3923fb2c84184cbd9a73dbe45fc9d7b7';
 
     $(function() {
