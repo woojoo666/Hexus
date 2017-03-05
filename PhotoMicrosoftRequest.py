@@ -75,7 +75,7 @@ params = urllib.parse.urlencode({
 })
 
 # Replace the three dots below with the URL of a JPEG image of a celebrity.
-body = "{'url':'http://cdn.embed.ly/providers/logos/imgur.png'}"
+body = "{'url':'https://www.w3schools.com/css/trolltunga.jpg'}"
 res = ""
 
 try:

@@ -1,75 +1,27 @@
 <!DOCTYPE html>
+
 <html>
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 	<title>Hexus</title>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-	<script src="components/fulltilt/dist/fulltilt.min.js"></script>
+	<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-	<script>
-
-	var SUBSCRIPTION_KEY = '3923fb2c84184cbd9a73dbe45fc9d7b7';
-
-    $(function() {
-        var params = {
-            // Request parameters
-            "visualFeatures": "Categories",
-            "language": "en",
-        };
-      
-        $.ajax({
-            url: "https://westus.api.cognitive.microsoft.com/vision/v1.0/analyze?" + $.param(params),
-            beforeSend: function(xhrObj){
-                // Request headers
-                xhrObj.setRequestHeader("Content-Type","application/json");
-                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",SUBSCRIPTION_KEY);
-            },
-            type: "POST",
-            // Request body
-            data: {url: 'http://cdn.embed.ly/providers/logos/imgur.png'},
-        })
-        .done(function(data) {
-            alert("success");
-            console.log(data);
-        })
-        .fail(function() {
-            alert("error");
-        });
-    });
-
-	var promise = new FULLTILT.getDeviceOrientation({ type: 'world' });
-
-	// FULLTILT.DeviceOrientation instance placeholder
-	var deviceOrientation;
-	var reported = false;
-
-	promise
-		.then(function(controller) {
-			// Store the returned FULLTILT.DeviceOrientation object
-			deviceOrientation = controller;
-			if (!reported) {
-				$('body').append('<p>'+JSON.stringify(deviceOrientation)+'</p>');
-				var quaternion = deviceOrientation.getScreenAdjustedQuaternion();
-				var matrix = deviceOrientation.getScreenAdjustedMatrix();
-				var euler = deviceOrientation.getScreenAdjustedEuler();
-
-				// Do something with our quaternion, matrix, euler objects...
-				$('body').append('<p>'+JSON.stringify(quaternion)+'</p>');
-				$('body').append('<p>'+JSON.stringify(matrix)+'</p>');
-				$('body').append('<p>'+JSON.stringify(euler)+'</p>');
-				reported = true;
-			}
-		})
-		.catch(function(message) {
-			console.error(message);
-
-			// Optionally set up fallback controls...
-			// initManualControls();
-		});
-	</script>
+	<input type="file" id="fileInput" accept="image/*;capture=camera">
+	<script src="microsoft.js"></script>
 </body>
+
+<!-- <form enctype="multipart/form-data" method="post">
+<h2>Register image</h2>
+  <input type="file" id="capture" onchange="capVal(this.src)" accept="image/*;capture=camera"></input>
+ </form>
+ -->
+<!--[if IE]>
+<script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+<script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
 
 </html>
