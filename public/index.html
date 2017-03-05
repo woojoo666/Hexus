@@ -6,18 +6,12 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 	<title>Hexus</title>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-<<<<<<< HEAD
-	<link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-	<input type="file" id="fileInput" accept="image/*;capture=camera">
-	<script src="microsoft.js"></script>
-=======
 	<script src="components/fulltilt/dist/fulltilt.min.js"></script>
 	<script src="components/Snap.svg/dist/snap.svg-min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular-animate.js"></script>
+	<script src="microsoft.js"></script>
+	<link rel="stylesheet" href="style.css">
 	<style>
 	body {
 		width: 100%;
@@ -78,9 +72,12 @@
 </head>
 
 <body ng-app="includeExample" ng-controller="ExampleController">
-	<select id="selector" ng-model="template" ng-options="t.name for t in templates">
-		<option value="">(blank)</option>
-	</select>
+	<div id="selector">
+		<select ng-model="template" ng-options="t.name for t in templates">
+			<option value="">(blank)</option>
+		</select>
+		<input type="file" id="fileInput" accept="image/*;capture=camera">
+	</div>
 	<div class="slide-animate-container">
 		<div class="slide-animate" ng-include="template.url"></div>
 	</div>
@@ -95,7 +92,6 @@
 			$scope.template = $scope.templates[0];
 		}]);
 	</script>
->>>>>>> 1e75253cfdaad9e7d3c0848be7525ac2f2c622de
 </body>
 
 <!-- <form enctype="multipart/form-data" method="post">
