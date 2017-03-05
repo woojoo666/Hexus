@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<title>Video Test</title>
+</head>
+
+<body>
+	<canvas id="canv" width="100" height="100"></canvas>
+	<script>
+
+	function videoError (err) {
+		console.log(err);
+	}
+
+	function fallback () {
+		console.log("This browser doesn't support camera!!");
+	}
+
+	document.body.onload = function() {
+	    window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
+	    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+	    /*
+	     * note: jquery tries to match property names to functions, and the $.width() function sets the style width property
+	     *       so to prevent this, we use uppercase so that jquery sets the canvas.width property and not the canvas.style.width property
+	     */
+	    
+	    var canvas = document.getElementById("canv");
+	    var context = canvas.getContext('2d');
+	    var localMediaStream;
+	    var video;
+
+	    // Call the getUserMedia method with our callback functions
+	    if (navigator.getUserMedia) {
+	      //Browser supports camera stream
+	      video = document.createElement('video');
+	      document.body.appendChild(video);
+	      video.width = 100;
+	      video.height = 100;
+	      navigator.getUserMedia({ video: true }, streamSuccessCallback, videoError || fallback);
+	    } else {
+	      //browser doesn't support camera stream
+	      fallback();
+	    }
+
+	    var scan = function() {
+	      if (localMediaStream) {
+	        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+	        console.log(canvas.toDataURL('image/jpeg', 0.7).slice(0,10));
+
+	        setTimeout(scan, 500);
+
+	      } else {
+	        setTimeout(scan, 500);
+	      }
+	    }; //end snapshot function
+
+	    function streamSuccessCallback(stream) {
+	      video.src = (window.URL && window.URL.createObjectURL(stream)) || stream;
+	      localMediaStream = stream;
+
+	      video.play();
+	      setTimeout(scan, 1000);
+	    };
+	};
+	</script>
+</body>
+</html>
