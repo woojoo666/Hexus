@@ -79,10 +79,20 @@
 	</div>
 	<script>
 
-	var socket = io.connect('http://' + document.domain + ':' + location.port + '/test.js');
-	socket.on('hello', (msg) => {
+	var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
+	console.log('http://' + document.domain + ':' + location.port + '/test.js');
+	socket.on('my response', (msg) => {
+		console.log(msg);
+		socket.emit('my event', {data: 'echo me'});
+	});
+
+	socket.on('echo data', (msg) => {
 		console.log(msg);
 	});
+
+	window.onbeforeunload = function() {
+		socket.disconnect();
+	};
 
 	angular.module('includeExample', ['ngAnimate'])
 		.controller('ExampleController', ['$scope', function($scope) {
