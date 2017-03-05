@@ -6,10 +6,30 @@
 	<title>Hexus</title>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 	<script src="components/fulltilt/dist/fulltilt.min.js"></script>
+	<script src="components/Snap.svg/dist/snap.svg-min.js"></script>
+	<style>
+	svg {
+		width: 300px;
+		height: 300px;
+	}
+	</style>
 </head>
 
 <body>
+	<svg id="logo"></svg>
 	<script>
+
+	var s = Snap("#logo");
+	var g = s.group();
+
+	var hoverover = function() { g.animate({ transform: 's2r45,150,150' }, 1000, mina.bounce ) };
+	var hoverout = function() { g.animate({ transform: 's1r0,150,150' }, 1000, mina.bounce ) };
+
+	Snap.load('../logo.svg', function ( loadedFragment ) {
+		g.append( loadedFragment );
+		g.hover( hoverover, hoverout );
+		g.text(300,100, 'hover over me');
+	});
 
 	var SUBSCRIPTION_KEY = '3923fb2c84184cbd9a73dbe45fc9d7b7';
 
