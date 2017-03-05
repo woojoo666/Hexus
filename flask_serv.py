@@ -1,10 +1,21 @@
 from flask import Flask, render_template
 from flask.ext.socketio import SocketIO, emit
 import os
+from flask import send_from_directory
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
+
+@app.route('/')
+def hello_world():
+    return app.send_static_file('index.html')
+
+@app.route('/public/<path:filename>')
+def serve_static(filename):
+    root_dir = os.path.dirname(os.getcwd())
+    print(os.path.join(root_dir, 'public'))
+    return send_from_directory(os.path.join(root_dir,'hexus', 'public'), filename)
 
 @app.route('/play_dota')
 def play_dota():
