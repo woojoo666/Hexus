@@ -10,21 +10,33 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular-animate.js"></script>
 	<style>
-	svg {
-		width: 300px;
-		height: 300px;
+	body {
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		background-color: #222;
+		color: #eee;
+	}
+
+	* {
+		box-sizing: border-box;
+	}
+
+	#selector {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 2;
+		color: #222;
 	}
 
 	.slide-animate-container {
-		position:relative;
-		background:white;
-		border:1px solid black;
-		height:40px;
-		overflow:hidden;
-	}
-
-	.slide-animate {
-		padding:10px;
+		width: 100%;
+		max-width: 400px;
+		height: 100%;
+		position: relative;
+		margin: auto;
 	}
 
 	/* Angular Template Animations */
@@ -56,98 +68,23 @@
 	</style>
 </head>
 
-<body ng-app="includeExample">
-	<svg id="logo"></svg>
-	<div ng-controller="ExampleController">
-	  <select ng-model="template" ng-options="t.name for t in templates">
+<body ng-app="includeExample" ng-controller="ExampleController">
+	<select id="selector" ng-model="template" ng-options="t.name for t in templates">
 		<option value="">(blank)</option>
-		</select>
-		url of the template: <code>{{template.url}}</code>
-		<div class="slide-animate-container">
-			<div class="slide-animate" ng-include="template.url"></div>
-		</div>
+	</select>
+	<div class="slide-animate-container">
+		<div class="slide-animate" ng-include="template.url"></div>
 	</div>
 	<script>
 
 	angular.module('includeExample', ['ngAnimate'])
 		.controller('ExampleController', ['$scope', function($scope) {
 			$scope.templates = [
+				{ name: 'searching.html', url: 'searching.html'},
 				{ name: 'template1.html', url: 'template1.html'},
 				{ name: 'template2.html', url: 'template2.html'}];
 			$scope.template = $scope.templates[0];
-			$scope.test = "hello world";
 		}]);
-/*
-	var s = Snap("#logo");
-	var g = s.group();
-
-	var hoverover = function() { g.animate({ transform: 's2r45,150,150' }, 1000, mina.bounce ) };
-	var hoverout = function() { g.animate({ transform: 's1r0,150,150' }, 1000, mina.bounce ) };
-
-	Snap.load('../logo.svg', function ( loadedFragment ) {
-		g.append( loadedFragment );
-		g.hover( hoverover, hoverout );
-		g.text(300,100, 'hover over me');
-	});
-*/
-	var SUBSCRIPTION_KEY = '3923fb2c84184cbd9a73dbe45fc9d7b7';
-
-    $(function() {
-        var params = {
-            // Request parameters
-            "visualFeatures": "Categories",
-            "language": "en",
-        };
-      
-        $.ajax({
-            url: "https://westus.api.cognitive.microsoft.com/vision/v1.0/analyze?" + $.param(params),
-            beforeSend: function(xhrObj){
-                // Request headers
-                xhrObj.setRequestHeader("Content-Type","application/json");
-                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",SUBSCRIPTION_KEY);
-            },
-            type: "POST",
-            // Request body
-            data: {url: 'http://cdn.embed.ly/providers/logos/imgur.png'},
-        })
-        .done(function(data) {
-            alert("success");
-            console.log(data);
-        })
-        .fail(function() {
-            alert("error");
-        });
-    });
-
-	var promise = new FULLTILT.getDeviceOrientation({ type: 'world' });
-
-	// FULLTILT.DeviceOrientation instance placeholder
-	var deviceOrientation;
-	var reported = false;
-
-	promise
-		.then(function(controller) {
-			// Store the returned FULLTILT.DeviceOrientation object
-			deviceOrientation = controller;
-			if (!reported) {
-				$('body').append('<p>'+JSON.stringify(deviceOrientation)+'</p>');
-				var quaternion = deviceOrientation.getScreenAdjustedQuaternion();
-				var matrix = deviceOrientation.getScreenAdjustedMatrix();
-				var euler = deviceOrientation.getScreenAdjustedEuler();
-
-				// Do something with our quaternion, matrix, euler objects...
-				$('body').append('<p>'+JSON.stringify(quaternion)+'</p>');
-				$('body').append('<p>'+JSON.stringify(matrix)+'</p>');
-				$('body').append('<p>'+JSON.stringify(euler)+'</p>');
-				reported = true;
-			}
-		})
-		.catch(function(message) {
-			console.error(message);
-
-			// Optionally set up fallback controls...
-			// initManualControls();
-		});
 	</script>
 </body>
 

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<title>Hexus</title>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+	<script src="components/fulltilt/dist/fulltilt.min.js"></script>
+</head>
+<body>
+<script>
+	var promise = new FULLTILT.getDeviceOrientation({ type: 'world' });
+
+	// FULLTILT.DeviceOrientation instance placeholder
+	var deviceOrientation;
+	var reported = false;
+
+	promise
+		.then(function(controller) {
+			// Store the returned FULLTILT.DeviceOrientation object
+			deviceOrientation = controller;
+			if (!reported) {
+				$('body').append('<p>'+JSON.stringify(deviceOrientation)+'</p>');
+				var quaternion = deviceOrientation.getScreenAdjustedQuaternion();
+				var matrix = deviceOrientation.getScreenAdjustedMatrix();
+				var euler = deviceOrientation.getScreenAdjustedEuler();
+
+				// Do something with our quaternion, matrix, euler objects...
+				$('body').append('<p>'+JSON.stringify(quaternion)+'</p>');
+				$('body').append('<p>'+JSON.stringify(matrix)+'</p>');
+				$('body').append('<p>'+JSON.stringify(euler)+'</p>');
+				reported = true;
+			}
+		})
+		.catch(function(message) {
+			console.error(message);
+
+			// Optionally set up fallback controls...
+			// initManualControls();
+		});
+</script>
+</body>
+</html>
