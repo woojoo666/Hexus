@@ -85,6 +85,7 @@
 		$('#reader').base64_scanner(
 			function(imgBase64) {
 				console.log(imgBase64.slice(0,30));
+				if (socket) socket.emit('capturedImage', {data: imgBase64 });
 			},
 			function(err) {
 				console.log(err);
