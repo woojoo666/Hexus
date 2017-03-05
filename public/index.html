@@ -98,7 +98,7 @@
 		);
 	};
 
-	var socket = io.connect('http://' + document.domain + ':' + location.port + '/test.js');
+	var socket = io.connect('http://23.236.49.226:5000/test');
 	socket.on('my response', (msg) => {
 		console.log(msg);
 		socket.emit('my event', {data: 'echo me'});
